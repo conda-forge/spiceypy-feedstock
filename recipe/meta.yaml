@@ -1,6 +1,6 @@
 {% set name = "spiceypy" %}
-{% set version = "2.1.0" %}
-{% set sha256 = "fdd8eeb4df1f482a18048364bc0508fbee381c930146330e4e3bc8f5574ca9a9" %}
+{% set version = "2.1.1" %}
+{% set sha256 = "75e79065691e9e9ee3b4b0d46dfb28d6eee44ed1c660a964c77f350d4b58256f" %}
 
 package:
   name: {{ name|lower }}
@@ -16,15 +16,16 @@ source:
     - 0002-Get-rid-of-setup_requires.patch
 
 build:
-  number: 2
+  number: 0
   noarch: python
 
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  script: python -m pip install --no-deps --ignore-installed .
 
 requirements:
   build:
     - python
     - setuptools
+    - pip
   run:
     - python
     - cspice ==66

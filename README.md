@@ -14,12 +14,15 @@ Summary: The NASA JPL NAIF SPICE toolkit wrapper written in Python
 Current build status
 ====================
 
-All platforms: [![Circle CI](https://circleci.com/gh/conda-forge/spiceypy-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/spiceypy-feedstock)
+All platforms:
+[![noarch](https://img.shields.io/circleci/project/github/conda-forge/spiceypy-feedstock/master.svg?label=noarch)](https://circleci.com/gh/conda-forge/spiceypy-feedstock)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/spiceypy/badges/version.svg)](https://anaconda.org/conda-forge/spiceypy)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/spiceypy/badges/downloads.svg)](https://anaconda.org/conda-forge/spiceypy)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-spiceypy-green.svg)](https://anaconda.org/conda-forge/spiceypy) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/spiceypy.svg)](https://anaconda.org/conda-forge/spiceypy) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/spiceypy.svg)](https://anaconda.org/conda-forge/spiceypy) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/spiceypy.svg)](https://anaconda.org/conda-forge/spiceypy) |
 
 Installing spiceypy
 ===================
