@@ -1,6 +1,6 @@
 {% set name = "spiceypy" %}
-{% set version = "2.1.2" %}
-{% set sha256 = "0d7e595853b8de5e95ab356a57ab36048f67064c3d629cecb57182382f953783" %}
+{% set version = "2.2.0" %}
+{% set sha256 = "0ffa4625e27bb94bce6243b62e708784e4ffeb938f6ae1d711a05425fb6ff7f7" %}
 
 package:
   name: {{ name|lower }}
@@ -16,7 +16,7 @@ source:
     - 0002-Get-rid-of-setup_requires.patch
 
 build:
-  number: 1
+  number: 0
   noarch: python
 
   script: python -m pip install --no-deps --ignore-installed .
