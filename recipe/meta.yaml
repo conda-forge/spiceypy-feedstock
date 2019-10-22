@@ -18,9 +18,6 @@ source:
 
 build:
   number: 2
-  noarch: python
-  skip: false  # [win]
-  skip: false  # [unix]
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
