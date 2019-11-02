@@ -17,7 +17,7 @@ source:
     - 0003-added-cross-platform-tmp-directory-for-unit-tests.patch
 
 build:
-  number: 2
+  number: 3
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
