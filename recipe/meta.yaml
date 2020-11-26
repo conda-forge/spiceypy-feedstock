@@ -15,7 +15,7 @@ source:
     - 0001-newer-single-patch-for-conda-installs.patch
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
