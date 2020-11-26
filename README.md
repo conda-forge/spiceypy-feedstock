@@ -5,9 +5,11 @@ Home: https://github.com/AndrewAnnex/SpiceyPy
 
 Package license: MIT
 
-Feedstock license: BSD 3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/spiceypy-feedstock/blob/master/LICENSE.txt)
 
 Summary: The NASA JPL NAIF SPICE toolkit wrapper written in Python
+
+Documentation: http://spiceypy.readthedocs.io/
 
 SpiceyPy is a python wrapper for the SPICE Toolkit. SPICE is an
 essential tool for scientists and engineers alike in the planetary
