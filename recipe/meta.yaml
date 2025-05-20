@@ -7,12 +7,10 @@ package:
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  git_url: https://github.com/AndrewAnnex/SpiceyPy.git
+  git_rev: cyice
+  git_depth: 1
 
-  patches:
-    - 0001-newer-single-patch-for-conda-installs.patch
 
 build:
   number: 2
@@ -20,24 +18,38 @@ build:
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
+  build:
+    - python >={{ python_min }}              # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - cython                                 # [build_platform != target_platform]
+    - numpy >=1.24                           # [build_platform != target_platform]
+    - cspice ==67
+    - {{ compiler('c') }}
+    - {{ stdlib("c") }}
   host:
-    - python {{ python_min }}
+    - python >={{ python_min }}
     - pip
+    - cython
+    - numpy >=1.24.0
+    - cspice ==67
     - setuptools
-    - numpy >=1.17.0
   run:
     - python >={{ python_min }}
+    - setuptools
+    - numpy >=1.24.0
     - cspice ==67
-    - numpy >=1.17.0
+
 
 test:
   imports:
     - spiceypy
     - spiceypy.utils
+    - spiceypy.cyice
   requires:
     - pytest <7.0.0
     - pandas
-    - numpy >=1.17.0
+    - numpy >=1.24.0
+    - cspice ==67
     - python {{ python_min }}
   commands:
     - python -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long
