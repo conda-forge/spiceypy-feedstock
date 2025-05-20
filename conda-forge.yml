@@ -1,4 +1,16 @@
+azure:
+  store_build_artifacts: true
+build_platform:
+  linux_aarch64: linux_64
+  linux_ppc64le: linux_64
+  osx_arm64: osx_64
 conda_forge_output_validation: true
+provider:
+  linux_64: azure
+  osx_64: azure
+  win_64: azure
+  linux_aarch64: default
+  linux_ppc64le: default
 bot:
   automerge: true
 github:
@@ -6,3 +18,4 @@ github:
   tooling_branch_name: main
 conda_build:
   pkg_format: '2'
+test: native_and_emulated
