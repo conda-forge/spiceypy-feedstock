@@ -24,3 +24,11 @@ python:
 - 3.12.* *_cpython
 target_platform:
 - osx-arm64
+
+CONDA_BUILD_SYSROOT:
+- /var/folders/6r/0_ck04691rx1vj2x5knvq8s00000gn/T/tmp.5Y2XrDmhlh/MacOSX11.0.sdk
+
+
+CONDA_BUILD_SYSROOT:
+- /var/folders/6r/0_ck04691rx1vj2x5knvq8s00000gn/T/tmp.w1UakCgFTc/MacOSX11.0.sdk
+

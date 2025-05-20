@@ -9,7 +9,7 @@ package:
 source:
   git_url: https://github.com/AndrewAnnex/SpiceyPy.git
   git_rev: cyice
-  git_depth: 1
+  git_depth: 0
 
 
 build:
@@ -45,7 +45,7 @@ test:
     - spiceypy.utils
     - spiceypy.cyice
   requires:
-    - pytest <7.0.0
+    - pytest >=7.0.0
     - pytest-benchmark
     - pandas
     - numpy >=1.26
