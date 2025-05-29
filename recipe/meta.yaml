@@ -6,38 +6,41 @@ package:
   name: {{ name|lower }}
   version: {{ version }}
 
-source:
-  git_url: https://github.com/AndrewAnnex/SpiceyPy.git
-  git_rev: cyice
-  git_depth: 0
+# source:
+#   git_url: https://github.com/AndrewAnnex/SpiceyPy.git
+#   git_rev: cyice
+#   git_depth: 0
 
+source:
+    path: ../../SpiceyPy   
 
 build:
   number: 0
+  skip: true  # [python_impl == 'pypy' or py<310 or win32 or s390x]
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
-    - cython                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - numpy >=1.26                           # [build_platform != target_platform]
-    - cspice ==67                            # [build_platform != target_platform]
+    - python                                 # [build_platform != target_platform]     
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]                
+    - cython                                 # [build_platform != target_platform]                   
+    - numpy                                  # [build_platform != target_platform]                   
+    - cspice ==67                            # [build_platform != target_platform] 
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
+    - setuptools >=76.0.0
+    - wheel
     - pip
   host:
     - python
     - cython
-    - numpy >=1.26
+    - numpy 
     - cspice ==67
-    - setuptools
+    - setuptools >=76.0.0
+    - wheel
     - pip
   run:
     - python
-    - setuptools
-    - numpy >=1.26
     - cspice ==67
-
 
 test:
   imports:
@@ -48,7 +51,7 @@ test:
     - pytest >=7.0.0
     - pytest-benchmark
     - pandas
-    - numpy >=1.26
+    - numpy
     - cspice ==67
     - python
   commands:

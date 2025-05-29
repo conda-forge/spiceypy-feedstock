@@ -1,3 +1,4 @@
 #!/bin/bash
 
-${PYTHON} -m pip install . --no-deps -vv
+${PYTHON} setup.py build_ext 
+${PYTHON} -m pip install . --no-deps --no-build-isolation -vv
