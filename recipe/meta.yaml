@@ -1,6 +1,6 @@
 {% set name = "spiceypy" %}
-{% set version = "6.0.0" %}
-{% set sha256 = "ac27096a12b795898c3a6d1fa1f12a7e4485f480acd2e59fbd3a986cb0ade2be" %}
+{% set version = "6.0.1" %}
+{% set sha256 = "3083f0f83d7b1d648dcb909624d46ad830b96f238208cb1ca05c1473198a7c23" %}
 
 package:
   name: {{ name|lower }}
@@ -15,7 +15,7 @@ source:
     - 0001-newer-single-patch-for-conda-installs.patch
 
 build:
-  number: 2
+  number: 0
   noarch: python
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
@@ -24,20 +24,20 @@ requirements:
     - python {{ python_min }}
     - pip
     - setuptools
-    - numpy >=1.17.0
+    - numpy >=2.0,<3
   run:
     - python >={{ python_min }}
     - cspice ==67
-    - numpy >=1.17.0
+    - numpy >=2.0,<3
 
 test:
   imports:
     - spiceypy
     - spiceypy.utils
   requires:
-    - pytest <7.0.0
+    - pytest >=7.0.0
     - pandas
-    - numpy >=1.17.0
+    - numpy >=2.0,<3
     - python {{ python_min }}
   commands:
     - python -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long
