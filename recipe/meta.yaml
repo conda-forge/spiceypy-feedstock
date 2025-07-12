@@ -1,6 +1,6 @@
 {% set name = "spiceypy" %}
-{% set version = "6.0.1" %}
-{% set sha256 = "3083f0f83d7b1d648dcb909624d46ad830b96f238208cb1ca05c1473198a7c23" %}
+{% set version = "6.0.2" %}
+{% set sha256 = "638b2e34cc247cb3a402fa67dcc61fd5f795032e21bb1b63c6c1ae79fdc29b86" %}
 
 package:
   name: {{ name|lower }}
@@ -24,11 +24,11 @@ requirements:
     - python {{ python_min }}
     - pip
     - setuptools
-    - numpy >=2.0,<3
+    - numpy >=1.23.5
   run:
     - python >={{ python_min }}
     - cspice ==67
-    - numpy >=2.0,<3
+    - numpy >=1.23.5
 
 test:
   imports:
@@ -37,7 +37,7 @@ test:
   requires:
     - pytest >=7.0.0
     - pandas
-    - numpy >=2.0,<3
+    - numpy >=1.23.5
     - python {{ python_min }}
   commands:
     - python -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long
