@@ -54,7 +54,7 @@ test:
     - cspice >=67,<68
     - python
   commands:
-    - python -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long
+    - python -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long --benchmark-disable
 
 about:
   home: https://github.com/AndrewAnnex/SpiceyPy
