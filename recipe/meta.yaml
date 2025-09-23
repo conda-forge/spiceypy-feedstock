@@ -40,7 +40,7 @@ requirements:
   run:
     - python
     - cspice >=67,<68
-    - numpy >=1.23.5,<3
+    - numpy
 
 test:
   imports:
@@ -55,7 +55,7 @@ test:
     - cspice >=67,<68
     - python
   commands:
-    - python -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long --benchmark-disable
+    - {{ PYTHON }} -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long --benchmark-disable
 
 about:
   home: https://github.com/AndrewAnnex/SpiceyPy
