@@ -1,6 +1,6 @@
 {% set name = "spiceypy" %}
-{% set version = "6.0.3" %}
-{% set sha256 = "5b7338651525c605738f41b1ff3bd363ee2bc09380b574c671e0651b2298ca4b" %}
+{% set version = "7.0.0" %}
+{% set sha256 = "023906fbadc5a3fdc73303d8d343162a16754e8d07557ef359378ea21712c396" %}
 
 package:
   name: {{ name|lower }}
@@ -10,37 +10,52 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-
   patches:
-    - 0001-newer-single-patch-for-conda-installs.patch
+    - ./patches/0001-output-in-src.patch
+
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  skip: true  # [python_impl == 'pypy' or py<310 or win32 or s390x]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
+  build:
+    - python                                 # [build_platform != target_platform]    
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - cython                                 # [build_platform != target_platform]              
+    - numpy                                  # [build_platform != target_platform]         
+    - {{ compiler('c') }}
+    - {{ stdlib('c') }}
+    - cmake >=3.15
+    - make  # [not win]
+    - ninja  # [win]                            
   host:
-    - python {{ python_min }}
+    - python
+    - cython >=3.1
+    - numpy
+    - cspice >=67,<68
     - pip
-    - setuptools
-    - numpy >=1.23.5
+    - scikit-build-core  
   run:
-    - python >={{ python_min }}
-    - cspice ==67
-    - numpy >=1.23.5
+    - python
+    - cspice >=67,<68
+    - numpy
 
 test:
   imports:
     - spiceypy
     - spiceypy.utils
+    - spiceypy.cyice
   requires:
     - pytest >=7.0.0
+    - pytest-benchmark
     - pandas
-    - numpy >=1.23.5
-    - python {{ python_min }}
+    - numpy >=1.23.5,<3
+    - cspice >=67,<68
+    - python
   commands:
-    - python -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long
+    - python -m pytest --pyargs spiceypy -rpP -v --verbose --tb=long --benchmark-disable
 
 about:
   home: https://github.com/AndrewAnnex/SpiceyPy
