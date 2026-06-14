@@ -12,51 +12,91 @@ jobs:
         CONFIG: linux_64_python3.10.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_64_python3.10.____cpython
       linux_64_python3.11.____cpython:
         CONFIG: linux_64_python3.11.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_64_python3.11.____cpython
       linux_64_python3.12.____cpython:
         CONFIG: linux_64_python3.12.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_64_python3.12.____cpython
       linux_64_python3.13.____cp313:
         CONFIG: linux_64_python3.13.____cp313
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_64_python3.13.____cp313
       linux_64_python3.14.____cp314:
         CONFIG: linux_64_python3.14.____cp314
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_64_python3.14.____cp314
       linux_aarch64_python3.10.____cpython:
         CONFIG: linux_aarch64_python3.10.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_aarch64_python3.10.____cpython
       linux_aarch64_python3.11.____cpython:
         CONFIG: linux_aarch64_python3.11.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_aarch64_python3.11.____cpython
       linux_aarch64_python3.12.____cpython:
         CONFIG: linux_aarch64_python3.12.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_aarch64_python3.12.____cpython
       linux_aarch64_python3.13.____cp313:
         CONFIG: linux_aarch64_python3.13.____cp313
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_aarch64_python3.13.____cp313
       linux_aarch64_python3.14.____cp314:
         CONFIG: linux_aarch64_python3.14.____cp314
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+        docker_run_args: ''
+        build_workspace_dir: build_artifacts
+        store_build_artifacts: true
+        tools_install_dir: ~/miniforge3
         SHORT_CONFIG: linux_aarch64_python3.14.____cp314
   timeoutInMinutes: 360
   variables: {}
@@ -71,6 +111,9 @@ jobs:
     displayName: Configure binfmt_misc
 
   - script: |
+        export MINIFORGE_HOME=$(tools_install_dir)
+        export CONDA_BLD_PATH=$(build_workspace_dir)
+        export CONDA_FORGE_DOCKER_RUN_ARGS="$(docker_run_args)"
         export CI=azure
         export flow_run_id=azure_$(Build.BuildNumber).$(System.JobAttempt)
         export remote_url=$(Build.Repository.Uri)
@@ -88,21 +131,23 @@ jobs:
       BINSTAR_TOKEN: $(BINSTAR_TOKEN)
       FEEDSTOCK_TOKEN: $(FEEDSTOCK_TOKEN)
       STAGING_BINSTAR_TOKEN: $(STAGING_BINSTAR_TOKEN)
+
   - script: |
+        export MINIFORGE_HOME=$(tools_install_dir)
+        export CONDA_BLD_PATH=$(build_workspace_dir)
         export CI=azure
         export CI_RUN_ID=$(build.BuildNumber).$(system.JobAttempt)
         export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
-        export CONDA_BLD_DIR=build_artifacts
         export ARTIFACT_STAGING_DIR="$(Build.ArtifactStagingDirectory)"
-        # Archive everything in CONDA_BLD_DIR except environments
+        # Archive everything in CONDA_BLD_PATH except environments
         export BLD_ARTIFACT_PREFIX=conda_artifacts
         if [[ "$AGENT_JOBSTATUS" == "Failed" ]]; then
-          # Archive the CONDA_BLD_DIR environments only when the job fails
+          # Archive the CONDA_BLD_PATH environments only when the job fails
           export ENV_ARTIFACT_PREFIX=conda_envs
         fi
         ./.scripts/create_conda_build_artifacts.sh
     displayName: Prepare conda build artifacts
-    condition: succeededOrFailed()
+    condition: and(succeededOrFailed(), eq(variables.store_build_artifacts, true))
 
   - task: PublishPipelineArtifact@1
     displayName: Store conda build artifacts
