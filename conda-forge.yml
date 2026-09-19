@@ -1,10 +1,7 @@
-azure:
-  store_build_artifacts: true
 bot:
   automerge: true
 build_platform:
   linux_aarch64: linux_64
-  osx_arm64: osx_64
 conda_build:
   pkg_format: '2'
 conda_forge_output_validation: true
@@ -15,5 +12,8 @@ provider:
   linux_64: azure
   linux_aarch64: azure
   osx_64: azure
+  osx_arm64: default
   win_64: azure
 test: native_and_emulated
+workflow_settings:
+  store_build_artifacts: true
